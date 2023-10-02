@@ -1,18 +1,37 @@
-#include "libft.h"
-#include <stdio.h>
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_strlcpy.c                                       :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: waon-in <marvin@42.fr>                     +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/09/24 16:35:44 by waon-in           #+#    #+#             */
+/*   Updated: 2023/10/02 15:46:07 by waon-in          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
-size_t	strlcpy(char *dst, const char *src, size_t size)
+#include "libft.h"
+
+size_t	ft_strlcpy(char	*dst, const char *src, size_t dstsize)
 {
 	size_t		i;
-	unsigned char	*d;
-	unsigned char	*s;
 
-	d = (unsigned char *)dst;
-	s = (unsigned char *)src;
 	i = 0;
-	while (src[i])
+	if (dstsize == 0)
 	{
-		i++;
+		while (src[i])
+			i++;
+		return (i);
 	}
-	if (i
+	if (dstsize > 0)
+	{
+		while (i < dstsize - 1 && src[i])
+		{
+			dst[i] = src[i];
+			i++;
+		}
+		if (i < dstsize)
+			dst[i] = '\0';
+	}
+	return (i);
 }
