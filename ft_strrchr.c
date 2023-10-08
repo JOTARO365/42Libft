@@ -6,7 +6,7 @@
 /*   By: waon-in <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/04 12:33:46 by waon-in           #+#    #+#             */
-/*   Updated: 2023/10/04 12:33:48 by waon-in          ###   ########.fr       */
+/*   Updated: 2023/10/08 16:44:33 by waon-in          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ char	*ft_strrchr(const char *s, int c)
 	while (i >= 0)
 	{
 		if (s[i] == (char)c)
-			return ((char *)(s + 1));
+			return ((char *)(s + i));
 		i--;
 	}
 	return (NULL);
