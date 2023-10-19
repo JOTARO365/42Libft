@@ -6,21 +6,21 @@
 /*   By: waon-in <waon-in@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/19 14:48:34 by waon-in           #+#    #+#             */
-/*   Updated: 2023/10/19 14:48:34 by waon-in          ###   ########.fr       */
+/*   Updated: 2023/10/19 22:45:57 by waon-in          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-int     ft_lstsize(t_list *lst)
+int	ft_lstsize(t_list *lst)
 {
-    size_t      i;
+	size_t	i;
 
-    i = 0;
-    while (lst)
-    {
-        lst = lst->next;
-        i++;
-    }
-    return (i);
+	i = 0;
+	while (lst)
+	{
+		lst = lst->next;
+		i++;
+	}
+	return (i);
 }
