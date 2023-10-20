@@ -6,69 +6,108 @@
 /*   By: waon-in <waon-in@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/18 13:20:28 by waon-in           #+#    #+#             */
-/*   Updated: 2023/10/20 01:44:49 by waon-in          ###   ########.fr       */
+/*   Updated: 2023/10/20 16:45:00 by waon-in          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "libft.h"
 
-static int	ft_count_words(const char *s, char c)
+static char	**ft_allocate_res(char const *s, char c, size_t *word_count)
 {
-	int	count;
+	int		count;
+	int		in_word;
+	char	**res;
 
 	count = 0;
+	in_word = 0;
 	while (*s)
 	{
-		while (*s && *s == c)
-			s++;
-		if (*s)
+		if (*s != c && !in_word)
+		{
+			in_word = 1;
 			count++;
-		while (*s && *s != c)
-			s++;
+		}
+		else if (*s == c && in_word)
+			in_word = 0;
+		s++;
 	}
-	return (count);
+	res = (char **)malloc(sizeof(char *) * (count + 1));
+	if (!res)
+		return (NULL);
+	*word_count = count;
+	return (res);
 }
 
-static char	*ft_next_word(char **ps, char c)
+static char	*ft_get_next_word(const char *s, char c, size_t *len)
 {
-	char	*start;
-	char	*end;
+	const char	*start;
+	const char	*end;
 
-	while (**ps && **ps == c)
-		(*ps)++;
-	start = *ps;
-	if (end > start)
-		return (ft_strdup(start));
+	while (*s && *s == c)
+		s++;
+	start = s;
+	while (*s && *s != c)
+		s++;
+	end = s;
+	*len = end - start;
+	return ((char *)start);
+}
+
+static char	**ft_free_mem(char **arr, int words)
+{
+	int	i;
+
+	i = 0;
+	while (i < words && arr[i])
+	{
+		free(arr[i]);
+		arr[i] = NULL;
+		i++;
+	}
+	free(arr);
 	return (NULL);
 }
 
-static	void	ft_free_res(char **res, int idx)
+static char	*ft_strncpy(char *dst, const char *src, size_t n)
 {
-	while (idx >= 0)
-		free(res[idx--]);
-	free(res);
+	size_t	i;
+
+	i = 0;
+	while (i < n && src[i] != '\0')
+	{
+		dst[i] = src[i];
+		i++;
+	}
+	while (i < n)
+	{
+		dst[i] = '\0';
+		i++;
+	}
+	return (dst);
 }
 
 char	**ft_split(char const *s, char c)
 {
-	char	**res;
-	int	words;
-	int	i;
+	char			**res;
+	size_t			words;
+	size_t			len;
+	size_t			i;
 
-	i = 0;
+	len = 0;
 	if (!s)
-		return(NULL);
-	words = ft_count_words(s, c);
-	res = (char **)malloc(sizeof(char *) * (words + 1));
+		return (NULL);
+	res = ft_allocate_res(s, c, &words);
 	if (!res)
 		return (NULL);
+	i = 0;
 	while (i < words)
 	{
-		res[i] = ft_next_word((char **)&s, c);
+		s = ft_get_next_word(s, c, &len);
+		res[i] = (char *)malloc(sizeof(char) * (len + 1));
 		if (!res[i])
-		{
-			ft_free_res(res, i - 1);
-			return (NULL);
-		}
+			return (ft_free_mem(res, i));
+		ft_strncpy(res[i], s, len);
+		res[i][len] = '\0';
+		s += len;
 		i++;
 	}
 	res[words] = NULL;
