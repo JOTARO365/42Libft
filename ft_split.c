@@ -9,106 +9,68 @@
 /*   Updated: 2023/10/20 01:44:49 by waon-in          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
 #include "libft.h"
 
-static int	ft_count(char const *s, char c)
+static int	ft_count_words(const char *s, char c)
 {
 	int	count;
-	int	in_word;
 
 	count = 0;
-	in_word = 0;
 	while (*s)
 	{
-		if (*s != c && !in_word)
-		{
-			in_word = 1;
+		while (*s && *s == c)
+			s++;
+		if (*s)
 			count++;
-		}
-		else if (*s == c && in_word)
-			in_word = 0;
-		s++;
+		while (*s && *s != c)
+			s++;
 	}
 	return (count);
 }
 
-static char	*ft_get_next_word(const char *s, char c, size_t *len)
+static char	*ft_next_word(char **ps, char c)
 {
-	const char	*start;
-	const char	*end;
+	char	*start;
+	char	*end;
 
-	while (*s && *s == c)
-		s++;
-	start = s;
-	while (*s && *s != c)
-		s++;
-	end = s;
-	*len = end - start;
-	return ((char *)start);
+	while (**ps && **ps == c)
+		(*ps)++;
+	start = *ps;
+	if (end > start)
+		return (ft_strdup(start));
+	return (NULL);
 }
 
-static void	ft_free_mem(char **arr, int words)
+static	void	ft_free_res(char **res, int idx)
 {
-	int	i;
-
-	i = 0;
-	while (i < words && arr[i])
-	{
-		free(arr[i]);
-		i++;
-	}
-	free(arr);
-}
-
-static char	*ft_strncpy(char *dst, const char *src, size_t n)
-{
-	size_t	i;
-
-	i = 0;
-	while (i < n && src[i] != '\0')
-	{
-		dst[i] = src[i];
-		i++;
-	}
-	while (i < n)
-	{
-		dst[i] = '\0';
-		i++;
-	}
-	return (dst);
+	while (idx >= 0)
+		free(res[idx--]);
+	free(res);
 }
 
 char	**ft_split(char const *s, char c)
 {
-	char			**res;
-	size_t			words;
-	size_t			len;
-	size_t			i;
+	char	**res;
+	int	words;
+	int	i;
 
-	len = 0;
+	i = 0;
 	if (!s)
-		return (NULL);
-	words = ft_count(s, c);
+		return(NULL);
+	words = ft_count_words(s, c);
 	res = (char **)malloc(sizeof(char *) * (words + 1));
 	if (!res)
 		return (NULL);
-	i = 0;
 	while (i < words)
 	{
-		s = ft_get_next_word(s, c, &len);
-		res[i] = (char *)malloc(sizeof(char) * (len + 1));
+		res[i] = ft_next_word((char **)&s, c);
 		if (!res[i])
 		{
-			ft_free_mem(res, i);
+			ft_free_res(res, i - 1);
 			return (NULL);
 		}
-		ft_strncpy(res[i], s, len);
-		res[i][len] = '\0';
-		s += len;
 		i++;
 	}
 	res[words] = NULL;
 	return (res);
 }
-
