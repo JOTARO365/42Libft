@@ -6,7 +6,7 @@
 /*   By: waon-in <waon-in@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/18 13:20:28 by waon-in           #+#    #+#             */
-/*   Updated: 2023/10/20 16:45:00 by waon-in          ###   ########.fr       */
+/*   Updated: 2023/10/24 01:52:26 by waon-in          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "libft.h"
@@ -67,24 +67,6 @@ static char	**ft_free_mem(char **arr, int words)
 	return (NULL);
 }
 
-static char	*ft_strncpy(char *dst, const char *src, size_t n)
-{
-	size_t	i;
-
-	i = 0;
-	while (i < n && src[i] != '\0')
-	{
-		dst[i] = src[i];
-		i++;
-	}
-	while (i < n)
-	{
-		dst[i] = '\0';
-		i++;
-	}
-	return (dst);
-}
-
 char	**ft_split(char const *s, char c)
 {
 	char			**res;
@@ -105,7 +87,7 @@ char	**ft_split(char const *s, char c)
 		res[i] = (char *)malloc(sizeof(char) * (len + 1));
 		if (!res[i])
 			return (ft_free_mem(res, i));
-		ft_strncpy(res[i], s, len);
+		ft_strlcpy(res[i], s, len + 1);
 		res[i][len] = '\0';
 		s += len;
 		i++;
