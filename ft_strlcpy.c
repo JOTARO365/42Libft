@@ -3,34 +3,28 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strlcpy.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: waon-in <waon-in@student.42>               +#+  +:+       +#+        */
+/*   By: wiaon-in <wiaon-in@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/09/24 16:35:44 by waon-in           #+#    #+#             */
-/*   Updated: 2023/10/24 00:44:48 by waon-in          ###   ########.fr       */
+/*   Created: 2025/08/27 16:16:32 by wiaon-in          #+#    #+#             */
+/*   Updated: 2025/08/27 17:47:32 by wiaon-in         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-size_t	ft_strlcpy(char	*dst, const char *src, size_t dstsize)
+size_t	ft_strlcpy(char *dst, const char *src, size_t dstsize)
 {
-	size_t		i;
+	size_t		len;
+	size_t		to_cp;
 
-	i = 0;
-	if (dstsize == 0)
+	len = ft_strlen(src);
+	to_cp = len;
+	if (dstsize > 0)
 	{
-		while (src[i])
-			i++;
-		return (i);
+		if (to_cp >= dstsize)
+			to_cp = dstsize - 1;
+		ft_memcpy(dst, src, to_cp);
+		dst[to_cp] = '\0';
 	}
-	while (i < dstsize - 1 && src[i] && dstsize > 0)
-	{
-		dst[i] = src[i];
-		i++;
-	}
-	if (i < dstsize)
-		dst[i] = '\0';
-	while (src[i])
-		i++;
-	return (i);
+	return (len);
 }

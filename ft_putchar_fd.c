@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_putchar_fd.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: waon-in <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: wiaon-in <wiaon-in@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/10/16 16:32:20 by waon-in           #+#    #+#             */
-/*   Updated: 2023/10/16 16:41:13 by waon-in          ###   ########.fr       */
+/*   Created: 2025/08/31 00:50:19 by wiaon-in          #+#    #+#             */
+/*   Updated: 2025/08/31 03:24:21 by wiaon-in         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,6 @@
 
 void	ft_putchar_fd(char c, int fd)
 {
-	if (fd && c >= 0)
-		write(fd, &c, 1);
+	if (fd > 0)
+		write (fd, &c, 1);
 }

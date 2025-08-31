@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_memset.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: waon-in <waon-in@student.42.fr>            +#+  +:+       +#+        */
+/*   By: wiaon-in <wiaon-in@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/09/17 14:25:28 by waon-in           #+#    #+#             */
-/*   Updated: 2023/11/01 18:30:59 by waon-in          ###   ########.fr       */
+/*   Created: 2025/08/30 17:28:16 by wiaon-in          #+#    #+#             */
+/*   Updated: 2025/08/30 17:38:15 by wiaon-in         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,14 +14,13 @@
 
 void	*ft_memset(void *b, int c, size_t len)
 {
-	unsigned char	*p;
+	unsigned char	*best;
 
-	p = (unsigned char *)b;
-
+	best = (unsigned char *)b;
 	while (len > 0)
 	{
-		*p = c;
-		p++;
+		*best = (unsigned char)c;
+		best++;
 		len--;
 	}
 	return (b);

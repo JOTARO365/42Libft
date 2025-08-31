@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strdup.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: waon-in <waon-in@student.42>               +#+  +:+       +#+        */
+/*   By: wiaon-in <wiaon-in@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/10/06 16:35:17 by waon-in           #+#    #+#             */
-/*   Updated: 2023/10/24 03:28:37 by waon-in          ###   ########.fr       */
+/*   Created: 2025/08/27 16:13:48 by wiaon-in          #+#    #+#             */
+/*   Updated: 2025/08/27 18:31:35 by wiaon-in         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,13 +14,13 @@
 
 char	*ft_strdup(const char *s1)
 {
-	char	*ptr;
-	size_t	len;
+	char	*res;
+	int		len;
 
 	len = ft_strlen(s1);
-	ptr = malloc(sizeof(char) * (len + 1));
-	if (!ptr)
+	res = malloc(sizeof(char) * (len + 1));
+	if (!res)
 		return (NULL);
-	ft_strlcpy(ptr, s1, len + 1);
-	return (ptr);
+	ft_strlcpy(res, s1, len + 1);
+	return (res);
 }

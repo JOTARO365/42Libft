@@ -3,62 +3,53 @@
 /*                                                        :::      ::::::::   */
 /*   ft_itoa.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: waon-in <waon-in@student.42.fr>            +#+  +:+       +#+        */
+/*   By: wiaon-in <wiaon-in@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/10/18 13:20:16 by waon-in           #+#    #+#             */
-/*   Updated: 2023/10/20 01:07:49 by waon-in          ###   ########.fr       */
+/*   Created: 2025/08/30 13:00:18 by wiaon-in          #+#    #+#             */
+/*   Updated: 2025/08/30 17:22:45 by wiaon-in         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-static int	ft_get_num(int n)
+long	get_numb(long numb)
 {
-	int	len;
+	long	len;
 
 	len = 0;
-	if (n <= 0)
+	if (numb <= 0)
 		len++;
-	while (n)
+	while (numb)
 	{
 		len++;
-		n /= 10;
+		numb /= 10;
 	}
 	return (len);
 }
 
-static void	ft_fill_str(int n, char *str, int len)
+char	*ft_itoa(int c)
 {
-	while (n)
-	{
-		str[--len] = (n % 10) + '0';
-		n /= 10;
-	}
-}
+	long	size;
+	char	*res;
+	long	yeah;
 
-char	*ft_itoa(int n)
-{
-	int		len;
-	char	*str;
-
-	len = ft_get_num(n);
-	str = malloc(sizeof(char) * (len + 1));
-	if (!str)
+	yeah = c;
+	size = get_numb(yeah);
+	res = malloc(size + 1);
+	if (!res)
 		return (NULL);
-	str[len] = '\0';
-	if (n < 0)
+	res[size] = '\0';
+	if (yeah < 0)
 	{
-		str[0] = '-';
-		if (n == -2147483648)
-		{
-			str[1] = '2';
-			n = 147483648;
-		}
-		else
-			n = -n;
+		res[0] = '-';
+		yeah = -yeah;
 	}
-	else if (n == 0)
-		str[0] = '0';
-	ft_fill_str(n, str, len);
-	return (str);
+	else if (yeah == 0)
+		res[0] = '0';
+	while (yeah)
+	{
+		res[--size] = (yeah % 10) + 48;
+		yeah /= 10;
+	}
+	return (res);
 }

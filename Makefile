@@ -3,50 +3,64 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: waon-in <waon-in@student.42.fr>            +#+  +:+       +#+         #
+#    By: wiaon-in <wiaon-in@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2023/09/16 19:50:19 by waon-in           #+#    #+#              #
-#    Updated: 2023/11/01 18:29:51 by waon-in          ###   ########.fr        #
+#    Created: 2025/08/27 01:45:46 by wiaon-in          #+#    #+#              #
+#    Updated: 2025/08/31 14:43:56 by wiaon-in         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-NAME = libft.a
-SRCS = ft_isalpha.c ft_isdigit.c ft_isalnum.c ft_isascii.c ft_isprint.c
-SRCS += ft_strlen.c ft_memset.c ft_bzero.c ft_memcpy.c ft_memmove.c
-SRCS += ft_strlcpy.c ft_strlcat.c ft_toupper.c ft_tolower.c ft_strchr.c
-SRCS += ft_strrchr.c ft_strncmp.c ft_memchr.c ft_memcmp.c ft_strnstr.c
-SRCS += ft_atoi.c ft_calloc.c ft_strdup.c ft_substr.c ft_strjoin.c
-SRCS += ft_strtrim.c ft_strmapi.c ft_striteri.c ft_itoa.c ft_putchar_fd.c
-SRCS += ft_putstr_fd.c ft_putendl_fd.c ft_putnbr_fd.c ft_split.c
-SRCS_BONUS = $(SRCS) ft_lstnew.c ft_lstadd_front.c  ft_lstsize.c ft_lstlast.c
-SRCS_BONUS += ft_lstadd_back.c ft_lstdelone.c ft_lstclear.c ft_lstiter.c ft_lstmap.c
-CC = cc
+NAME	:= 		libft.a
 
-CFLAGS = -Wall -Wextra -Werror
+DOT		:= 		.c
 
-OBJS = $(SRCS:.c=.o)
+FT		:= 		ft_
 
-OBJS_BONUS = $(SRCS_BONUS:.c=.o)
+CC		:= 		cc
 
-$(NAME): $(OBJS)
+BONUS	:= 		_bonus
+
+CFLAGS	:= 		-Wall -Werror -Wextra -g3
+
+SRC		:=		isalpha isdigit isalnum isascii isprint \
+				strlen memset bzero memcpy memcmp memmove strlcpy \
+				strlcat toupper tolower strchr strrchr strncmp \
+				memchr strnstr atoi calloc strdup substr \
+				strjoin strtrim split itoa strmapi striteri putchar_fd \
+				putstr_fd putendl_fd putnbr_fd
+
+SRC_B	:=		lstnew lstadd_front lstadd_back lstsize lstlast lstdelone lstclear lstiter lstmap
+
+FILES	:=		$(addprefix $(FT), $(addsuffix $(DOT), $(SRC)))
+FILES_B :=		$(addsuffix $(DOT), $(addprefix $(FT), $(addsuffix $(BONUS), $(SRC_B))))
+
+OBJS	:=		$(FILES:.c=.o)
+
+OBJS_B	:=		$(FILES_B:.c=.o)
+
+all:			$(NAME)
+
+$(NAME):		$(OBJS)
 	ar rcs $@ $^
 
-%.o : %.c
-	$(CC) $(CFLAGS) -c $^ -o $@
+%.o:%.c 
+	$(CC) $(CFLAGS) -I. -c $< -o $@
 
-all : $(NAME)
+bonus:			$(OBJS) $(OBJS_B)
+	ar rcs $(NAME) $(OBJS) $(OBJS_B)
 
-clean :
-	rm -rf $(OBJS) $(OBJS_BONUS)
+clean:
+	rm -rf $(OBJS) $(OBJS_B)
 
-fclean : clean
+fclean:			clean
 	rm -rf $(NAME)
 
-re :
-	make fclean
-	make
+re:				fclean all
 
-bonus: $(OBJS)
-	ar rcs $(NAME) $^
-
-.PHONY : all clean fclean re bonus
+create:
+	@echo ======================== CREATE SOURCE ============================== 
+	@echo $(FILES)
+	@echo ===================== CREATE SOURCE BONUS =========================== 
+	@echo $(FILES_B)
+	
+.PHONY: all clean fclean re bonus

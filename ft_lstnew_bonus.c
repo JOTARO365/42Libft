@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_lstnew.c                                        :+:      :+:    :+:   */
+/*   ft_lstnew_bonus.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: waon-in <waon-in@student.42.fr>            +#+  +:+       +#+        */
+/*   By: wiaon-in <wiaon-in@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/10/19 13:54:29 by waon-in           #+#    #+#             */
-/*   Updated: 2023/10/19 22:45:00 by waon-in          ###   ########.fr       */
+/*   Created: 2025/08/31 02:11:16 by wiaon-in          #+#    #+#             */
+/*   Updated: 2025/08/31 02:30:47 by wiaon-in         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 t_list	*ft_lstnew(void *content)
 {
-	t_list	*new_node;
+	t_list		*new_node;
 
 	new_node = malloc(sizeof(t_list));
 	if (!new_node)

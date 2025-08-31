@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strtrim.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: waon-in <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: wiaon-in <wiaon-in@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/10/16 13:14:04 by waon-in           #+#    #+#             */
-/*   Updated: 2023/10/16 14:45:26 by waon-in          ###   ########.fr       */
+/*   Created: 2025/08/28 14:41:13 by wiaon-in          #+#    #+#             */
+/*   Updated: 2025/08/28 17:55:25 by wiaon-in         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,25 +14,25 @@
 
 char	*ft_strtrim(char const *s1, char const *set)
 {
+	const char	*str1;
+	const char	*str2;
 	size_t		i;
-	const char	*strn1;
-	const char	*strn2;
-	char		*str;
+	char		*res;
 
 	if (!s1 || !set)
 		return (NULL);
 	while (*s1 && ft_strchr(set, *s1))
 		s1++;
-	strn1 = s1;
-	strn2 = s1 + ft_strlen(s1);
-	while (strn2 > strn1 && ft_strchr(set, *(strn2 - 1)))
-		strn2--;
-	i = strn2 - strn1;
+	str1 = s1;
+	str2 = ft_strchr(s1, '\0');
+	while (str2 > str1 && ft_strchr(set, *(str2 - 1)))
+		str2--;
+	i = str2 - str1;
 	if (i == 0)
 		return (ft_strdup(""));
-	str = (char *)malloc(sizeof(char) * (i + 1));
-	if (!str)
+	res = malloc(sizeof(char) * (i + 1));
+	if (!res)
 		return (NULL);
-	ft_strlcpy(str, strn1, i + 1);
-	return (str);
+	ft_strlcpy(res, str1, (i + 1));
+	return (res);
 }

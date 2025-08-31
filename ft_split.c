@@ -3,95 +3,68 @@
 /*                                                        :::      ::::::::   */
 /*   ft_split.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: waon-in <waon-in@student.42.fr>            +#+  +:+       +#+        */
+/*   By: wiaon-in <wiaon-in@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/10/18 13:20:28 by waon-in           #+#    #+#             */
-/*   Updated: 2023/10/24 01:52:26 by waon-in          ###   ########.fr       */
+/*   Created: 2025/08/28 19:43:42 by wiaon-in          #+#    #+#             */
+/*   Updated: 2025/08/30 10:54:06 by wiaon-in         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 #include "libft.h"
 
-static char	**ft_allocate_res(char const *s, char c, size_t *word_count)
+void	str_tokenized(char **arr, char const *s, char c)
 {
-	int		count;
-	int		in_word;
-	char	**res;
+	size_t			len;
+	char const		*start;
 
-	count = 0;
-	in_word = 0;
 	while (*s)
 	{
-		if (*s != c && !in_word)
+		while (*s && *s == c)
+			++s;
+		start = s;
+		len = 0;
+		while (*s && *s != c)
 		{
-			in_word = 1;
-			count++;
+			++s;
+			++len;
 		}
-		else if (*s == c && in_word)
-			in_word = 0;
-		s++;
+		if (s > start)
+		{
+			*arr = ft_substr(start, 0, len);
+			arr++;
+		}
 	}
-	res = (char **)malloc(sizeof(char *) * (count + 1));
-	if (!res)
-		return (NULL);
-	*word_count = count;
-	return (res);
+	*arr = NULL;
 }
 
-static char	*ft_get_next_word(const char *s, char c, size_t *len)
+int	count_word(char const *s, char c)
 {
-	const char	*start;
-	const char	*end;
+	int		count;
 
-	while (*s && *s == c)
-		s++;
-	start = s;
-	while (*s && *s != c)
-		s++;
-	end = s;
-	*len = end - start;
-	return ((char *)start);
-}
-
-static char	**ft_free_mem(char **arr, int words)
-{
-	int	i;
-
-	i = 0;
-	while (i < words && arr[i])
+	count = 0;
+	while (*s)
 	{
-		free(arr[i]);
-		arr[i] = NULL;
-		i++;
+		while (*s && *s == c)
+			++s;
+		if (*s)
+			count++;
+		while (*s && *s != c)
+			++s;
 	}
-	free(arr);
-	return (NULL);
+	return (count);
 }
 
 char	**ft_split(char const *s, char c)
 {
-	char			**res;
-	size_t			words;
-	size_t			len;
-	size_t			i;
+	char	**res;
+	int		size;
 
-	len = 0;
 	if (!s)
 		return (NULL);
-	res = ft_allocate_res(s, c, &words);
+	size = count_word(s, c);
+	res = malloc(sizeof(char *) * (size + 1));
 	if (!res)
 		return (NULL);
-	i = 0;
-	while (i < words)
-	{
-		s = ft_get_next_word(s, c, &len);
-		res[i] = (char *)malloc(sizeof(char) * (len + 1));
-		if (!res[i])
-			return (ft_free_mem(res, i));
-		ft_strlcpy(res[i], s, len + 1);
-		res[i][len] = '\0';
-		s += len;
-		i++;
-	}
-	res[words] = NULL;
+	str_tokenized(res, s, c);
 	return (res);
 }
